@@ -23,10 +23,6 @@ function ENT:Initialize()
 
 	self.BaseClass.Initialize(self)
 
-	if not IsValid(self:CPPIGetOwner()) then
-		self:CPPISetOwner(game.GetWorld())
-	end
-
 	self.PhysObj:EnableGravity( false )
 	self.PhysObj:EnableMotion( false )
 
@@ -517,7 +513,7 @@ function ENT:ConfigureMissile()
 
 	--0-stops underwater
 	--1-booster only underwater - DEFAULT
-	--2-works above and below 
+	--2-works above and below
 	--3-underwater only
 	--4-booster all and under thrust only
 

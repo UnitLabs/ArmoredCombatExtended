@@ -212,7 +212,6 @@ do
 
 			Mine.CustomMineDetonation = MineData.customdetonation
 
-			Mine:CPPISetOwner(Entity(0))
 			Mine.DamageOwner = Owner -- Done to avoid owners from manipulating the entity, but allowing the damage to be credited by him.
 
 			Mine:SetPos( Pos )
