@@ -105,7 +105,7 @@ function Round.network( Crate, BulletData )
 	Crate:SetNWFloat( "Tracer", BulletData.Tracer )
 
 		--For propper bullet model
-	Crate:SetNWFloat( "BulletModel", Round.model )
+	Crate:SetNWString( "BulletModel", Round.model )
 
 end
 

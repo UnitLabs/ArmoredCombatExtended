@@ -655,7 +655,7 @@ do
 		self.Caliber        = AmmoGunData.caliber or 1
 		self.RoFMul         = self.IsTwoPiece and 0.3 or 0						--30% ROF penalty for 2 piece
 
-		self:SetNWString( "Ammo", self.Ammo )
+		self:SetNWInt( "Ammo", self.Ammo )
 		self:SetNWString( "WireName", WireName )
 
 		self.NetworkData = ACF.RoundTypes[self.BulletData.Type].network
