@@ -601,7 +601,6 @@ function GenerateMissile(MissileData,Crate,BData) --Shorthand function for gener
 	if not IsValid(Crate) then return false end
 
 	local ply = MissileData.Owner
-	print(ply)
 
 	local missile = ents.Create("ace_missile")
 	missile:CPPISetOwner(ply)
