@@ -4,19 +4,19 @@ local Material		= {}
 Material.id			= "Alum"
 Material.name		= "Aluminum"
 Material.sname		= "Aluminum"
-Material.desc		= "Aluminum is normally used by AFVs or light constructions, due to the fact it provides more protection for its weight, but is harder to use at high thicknesses making it worthless for heavy applications and is vulnerable to HEAT and creating spalling."
+Material.desc		= "Aluminum is normally used by AFVs or light constructions, as it provides significantly more protection for a given weight. It is more costly and prone to spalling though."
 Material.year		= 1955
 
-Material.massMod		= 0.221
-Material.curve		= 0.93
+Material.massMod		= 0.333
+Material.curve		= 0.92
 
-Material.effectiveness  = 0.34
-Material.resiliance	= 1.05
-Material.HEATMul		= 5 --Originally 80. Someone REALLY hated aluminum against HEAT.
+Material.effectiveness  = 0.8325
+Material.resiliance	= 1.1
+Material.HEATMul		= 5 --Multiplies damage of HEAT against aluminum. Originally 80. Someone REALLY hated aluminum against HEAT.
 
-Material.spallresist	= 1.02
+Material.spallresist	= 1.0
 
-Material.spallmult	= 2
+Material.spallmult	= 1.2
 Material.ArmorMul	= 0.334
 Material.NormMult	= 0.7
 
@@ -85,7 +85,7 @@ if SERVER then
 		-- Projectile did not breach nor penetrate armor
 		local Penetration = math.min( maxPenetration , losArmor * effectiveness)
 
-		HitRes.Damage	= ( Penetration / losArmorHealth / effectiveness ) ^ 2 * FrArea * DamageModifier * damageMult * resiliance * ductilitymult
+		HitRes.Damage	= ( Penetration / losArmorHealth / effectiveness ) * FrArea * DamageModifier * damageMult * resiliance * ductilitymult
 		HitRes.Overkill = 0
 		HitRes.Loss	= 1
 

@@ -13,8 +13,8 @@ Material.curve		= 0.95
 --All effectiveness values multiply the Line of Sight armor values of armor.
 --All Resiliance values are damage multipliers. Higher = more damage. Lower = less damage.
 
-Material.effectiveness	= 2.5	--5 --Data before to angle factor. Needs proper testing
-Material.HEATeffectiveness  = 8	--20
+Material.effectiveness	= 3	--5 --Data before to angle factor. Needs proper testing
+Material.HEATeffectiveness  = 10	--20
 
 Material.resiliance		= 1
 Material.HEATresiliance	= 1
@@ -113,19 +113,19 @@ if SERVER then
 
 			--print("----------------------------------------Boom")
 
-			local HEWeight  = math.Min(armor * 0.25, 100) -- #nonukespls
+			local HEWeight  = math.Min(armor * 0.2, 200) -- #nonukespls
 			local Radius	= ACE_CalculateHERadius( HEWeight )
 			local Owner	= (CPPI and Entity:CPPIGetOwner()) or NULL
 			local EntPos	= Entity:GetPos()
 
-			ACF_HE( EntPos , vector_up , HEWeight , HEWeight , Owner , Entity, Entity ) --ERABOOM
+			ACF_HE( EntPos , vector_up , HEWeight , HEWeight , Owner , Entity, Entity, 0.1 ) --ERABOOM
 
 			--util.Effect not working during MP workaround. Waiting a while fixes the issue.
 			timer.Simple(0.001, function()
 				local Flash = EffectData()
 					Flash:SetOrigin( EntPos )
 					Flash:SetNormal( -vector_up )
-					Flash:SetRadius( math.max( Radius * 0.25, 1 ) )
+					Flash:SetRadius( math.Round(math.max(Radius / 39.37 * 0.125, 1),2) )
 				util.Effect( "ACF_Scaled_Explosion", Flash )
 			end)
 
@@ -172,7 +172,7 @@ if SERVER then
 			-- Projectile did not breach nor penetrate armor
 			local Penetration = math.min( maxPenetration , losArmor * effectiveness )
 
-			HitRes.Damage	= ( Penetration / losArmorHealth / effectiveness ) ^ 2 * FrArea * resiliance * damageMult
+			HitRes.Damage	= ( Penetration / losArmorHealth / effectiveness ) * FrArea * resiliance * damageMult
 			HitRes.Overkill = 0
 			HitRes.Loss	= 1
 
