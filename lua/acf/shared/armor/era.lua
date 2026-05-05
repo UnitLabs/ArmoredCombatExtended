@@ -96,7 +96,7 @@ if SERVER then
 			--Importart to remove the ent before the explosions begin
 			Entity:Remove()
 
-			HitRes.Damage	= 9999999999999
+			HitRes.Damage	= 9e5
 			HitRes.Overkill = math.Clamp(maxPenetration - blastArmor,0,1)					-- Remaining penetration.
 			HitRes.Loss	= math.Clamp(blastArmor / maxPenetration,0,0.98)					-- leaves 2% max penetration to pass
 
