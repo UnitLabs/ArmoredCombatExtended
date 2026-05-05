@@ -4,8 +4,8 @@ local Material		= {}
 Material.id			= "Sx"
 Material.name		= "Sex"
 Material.sname		= "Sexonium"
-Material.desc		= "Sex"
-Material.year		= 6621
+Material.desc		= "Sex ass"
+Material.year		= 6969
 
 Material.massMod		= 2
 Material.curve		= 2
@@ -24,9 +24,9 @@ if SERVER then
 
 		local HitRes = {}
 
-		HitRes.Damage	= 6969
+		HitRes.Damage	= 0.06969
 		HitRes.Overkill = 0.06969
-		HitRes.Loss	= 0
+		HitRes.Loss	= 1
 
 		return HitRes
 
