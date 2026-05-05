@@ -1,4 +1,3 @@
-
 local Material		= {}
 
 Material.id			= "CHA"
@@ -23,6 +22,11 @@ Material.ArmorMul	= 1
 Material.NormMult	= 0.8
 
 if SERVER then
+	local math_random = math.random
+	local math_Clamp = math.Clamp
+	local math_min = math.min
+	local math_exp = math.exp
+
 	function Material.ArmorResolution( Entity, armor, losArmor, losArmorHealth, maxPenetration, FrArea, caliber, damageMult, _)
 
 		local HitRes = {}
@@ -38,17 +42,17 @@ if SERVER then
 		losArmor	= losArmor ^ curve
 
 		-- Breach probability, chance of a shell to shoot clean through without doing much structural damage ignoring richochet and LOS armor.
-		local breachProb = math.Clamp( (caliber / armor / effectiveness - 1.3) / 5.7 , 0, 1) -- If the caliber in mm is at least 1.3x the effective armor there is a chance to overmatch. At 7x the effective armor, 100% chance to overmatch.
+		local breachProb = math_Clamp( (caliber / armor / effectiveness - 1.3) / 5.7 , 0, 1) -- If the caliber in mm is at least 1.3x the effective armor there is a chance to overmatch. At 7x the effective armor, 100% chance to overmatch.
 
 		-- Penetration probability
 		--The larger the number on the inside, the lower the penetration probability
 		--Penetration/Armor ratios below 1 lead to ludicrously large numbers, making penetration nearly impossible.
 		--Ratios of 1-2 lead to extremely small numbers around 1, causing penetration chances of ~40%-99%
 		--Ratios larger than 2 lead to ludicrously small numbers, making penetration almost guarenteed.
-		local penProb = (math.Clamp(1 / (1 + math.exp(-43.9445 * (maxPenetration / losArmor / effectiveness - 1))), 0.0015, 0.9985) - 0.0015) / 0.997
+		local penProb = (math_Clamp(1 / (1 + math_exp(-43.9445 * (maxPenetration / losArmor / effectiveness - 1))), 0.0015, 0.9985) - 0.0015) / 0.997
 
 		-- Breach chance roll
-		if breachProb > math.random() and maxPenetration > armor then
+		if breachProb > math_random() and maxPenetration > armor then
 
 			HitRes.Damage	= FrArea * resiliance * damageMult		-- Inflicted Damage
 			HitRes.Overkill = maxPenetration - armor						-- Remaining penetration
@@ -57,9 +61,9 @@ if SERVER then
 			return HitRes
 
 		-- Penetration chance roll
-		elseif penProb > math.random() then
+		elseif penProb > math_random() then
 
-			local Penetration = math.min( maxPenetration, losArmor * effectiveness )
+			local Penetration = math_min( maxPenetration, losArmor * effectiveness )
 
 			HitRes.Damage	= ( Penetration / losArmorHealth / effectiveness ) ^ 2 * FrArea * resiliance * damageMult * ductilitymult
 			HitRes.Overkill = ( maxPenetration - Penetration )
@@ -70,7 +74,7 @@ if SERVER then
 		end
 
 		-- Projectile did not breach nor penetrate armor
-		local Penetration = math.min( maxPenetration , losArmor * effectiveness )
+		local Penetration = math_min( maxPenetration , losArmor * effectiveness )
 
 		HitRes.Damage	= ( Penetration / losArmorHealth / effectiveness ) * FrArea * resiliance * damageMult * ductilitymult
 		HitRes.Overkill = 0

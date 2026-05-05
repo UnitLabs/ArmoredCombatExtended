@@ -1,4 +1,3 @@
-
 local Material		= {}
 
 Material.id			= "Cer"
@@ -23,6 +22,11 @@ Material.ArmorMul	= 1.8
 Material.NormMult	= 1.5
 
 if SERVER then
+	local math_random = math.random
+	local math_Clamp = math.Clamp
+	local math_min = math.min
+	local snd = Sound("physics/concrete/concrete_break2.wav")
+
 	function Material.ArmorResolution( Entity, armor, losArmor, losArmorHealth, maxPenetration, FrArea, _, damageMult, Type)
 
 		local HitRes = {}
@@ -55,16 +59,16 @@ if SERVER then
 		--Penetration/Armor ratios below 1 lead to ludicrously large numbers, making penetration nearly impossible.
 		--Ratios of 1-2 lead to extremely small numbers around 1, causing penetration chances of ~40%-99%
 		--Ratios larger than 2 lead to ludicrously small numbers, making penetration almost guarenteed.
-		local penProb = (math.Clamp(1 / (1 + math.exp(-43.9445 * (maxPenetration / losArmor / effectiveness - 1))), 0.0015, 0.9985) - 0.0015) / 0.997;
+		local penProb = (math_Clamp(1 / (1 + math.exp(-43.9445 * (maxPenetration / losArmor / effectiveness - 1))), 0.0015, 0.9985) - 0.0015) / 0.997;
 
 		-- Penetration chance roll
-		if penProb > math.random() then
+		if penProb > math_random() then
 
-			local Penetration = math.min( maxPenetration, losArmor * effectiveness )
+			local Penetration = math_min( maxPenetration, losArmor * effectiveness )
 
 			if maxPenetration > losArmor * effectiveness then
 				dmul = dmul * 4 --Damage multiplier for ceramic when it gets penned. Is this enough shatter?
-				Entity:EmitSound(Sound("physics/concrete/concrete_break2.wav"), 100, 100, 1, CHAN_WEAPON ) --I want to implement some sort of shatter sound. Would better be done through impact sounds.
+				Entity:EmitSound(snd, 100, 100, 1, CHAN_WEAPON ) --I want to implement some sort of shatter sound. Would better be done through impact sounds.
 			end
 
 			HitRes.Damage	= ( Penetration / losArmorHealth / effectiveness ) ^ 2 * FrArea * resiliance * damageMult * dmul * ductilitymult
@@ -76,7 +80,7 @@ if SERVER then
 		end
 
 		-- Projectile did not breach nor penetrate armor
-		local Penetration = math.min( maxPenetration , losArmor * effectiveness )
+		local Penetration = math_min( maxPenetration , losArmor * effectiveness )
 
 		HitRes.Damage	= ( Penetration / losArmorHealth / effectiveness ) * FrArea * resiliance * damageMult * dmul * ductilitymult
 		HitRes.Overkill = 0
