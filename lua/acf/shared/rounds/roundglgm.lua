@@ -13,6 +13,7 @@ Round.netid = 9 --Unique ammotype ID for network transmission
 
 Round.Type  = "GLATGM"
 
+---@param Gun Entity
 function Round.create( Gun, BulletData )
 
 	local mdl = "models/missiles/rs82.mdl"
@@ -30,11 +31,17 @@ function Round.create( Gun, BulletData )
 
 	local SMul = 15 / BulletData.Caliber * BulletData.MuzzleVel / 200
 
+	local pos = vector_origin
+	local attach = Gun:GetAttachment(1)
+	if attach ~= nil then
+		pos = attach.Pos
+	end
+
 	local MDat = {
 		Owner = Gun:CPPIGetOwner(),
 		Launcher = Gun,
 
-		Pos = Gun:GetAttachment(1).Pos + Gun:GetForward() * 39.37,
+		Pos = pos + Gun:GetForward() * 39.37,
 		Ang = Gun:GetAngles(),
 
 		Mdl = mdl,
@@ -70,7 +77,7 @@ function Round.create( Gun, BulletData )
 	BData.BulletData = nil
 
 	BData.Type = "HEAT"
-	--BData.Id = 2	
+	--BData.Id = 2
 
 	BData.FakeCrate = ents.Create("acf_fakecrate2")
 	BData.FakeCrate:RegisterTo(BData)

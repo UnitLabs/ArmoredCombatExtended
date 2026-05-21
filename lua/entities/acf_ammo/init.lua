@@ -190,8 +190,8 @@ do
 
 					--util.Effect not working during MP workaround. Waiting a while fixes the issue.
 
-					timer.Simple(DetDelay, function()
-						local OldAmmo = self.Ammo
+					local OldAmmo = self.Ammo
+					-- timer.Simple(DetDelay, function()
 						local Ratio = math.Rand(0.1,0.4)
 						self.Ammo = math.ceil(OldAmmo * Ratio * 2)
 						ACF_ScaledExplosion( self, false ) --Make the crate instantly explode without destroying it. Creates a nice violent explosion.
@@ -199,7 +199,7 @@ do
 						--Originally from 0 to 0.5 as half of the ammo was used for the explosion.
 						--Lead to inconsistent cookoffs with fast cooking ammo.
 						self.Ammo = math.ceil(OldAmmo * (1-Ratio))
-					end )
+					-- end )
 
 					self.Inflictor  = Inflictor
 					self.Damaged	= ACF.CurTime + (10 - Ratio * 8)
