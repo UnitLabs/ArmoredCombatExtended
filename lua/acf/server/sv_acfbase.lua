@@ -685,40 +685,6 @@ function ACE_CreateLinkRope(Pos, Ent1, LPos1, Ent2, LPos2)
 end
 
 --[[----------------------------------------------------------------------
-	A variation of the CreateKeyframeRope( ... ) for visualizing safezones
-	This one is more simple than the original function.
-	Creates a rope without any constraint
-------------------------------------------------------------------------]]
-function ACE_CreateSZRope( Pos, Ent, LPos1, LPos2 )
-
-	local rope = ents.Create( "keyframe_rope" )
-	rope:SetPos( Pos )
-	rope:SetKeyValue( "Width", 15 )
-	rope:SetKeyValue( "Type", 2 )
-
-	rope:SetKeyValue( "RopeMaterial", "cable/physbeam" )
-
-	-- Attachment point 1
-	rope:SetEntity( "StartEntity", Ent )
-	rope:SetKeyValue( "StartOffset", tostring( LPos1 ) )
-	rope:SetKeyValue( "StartBone", 0 )
-
-	-- Attachment point 2
-	rope:SetEntity( "EndEntity", Ent )
-	rope:SetKeyValue( "EndOffset", tostring( LPos2 ) )
-	rope:SetKeyValue( "EndBone", 0 )
-
-	rope:Spawn()
-	rope:Activate()
-
-	-- Delete the rope if the attachments get killed
-	Ent:DeleteOnRemove( rope )
-
-	return rope
-
-end
-
---[[----------------------------------------------------------------------
 	This function will look for the driver/operator of a gun/rack based
 	from the used gun inputs when firing.
 	Meant for determining if the driver seat is legal.
