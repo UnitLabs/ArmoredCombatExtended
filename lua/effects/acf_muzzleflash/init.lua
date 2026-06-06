@@ -79,7 +79,7 @@ function EFFECT:Init( data )
 		end
 
 		local LocPly = LocalPlayer()
-		if IsValid(LocPly) then
+		if IsValid(LocPly) and self.Origin ~= nil then
 			local PlayerDist = (LocPly:GetPos() - self.Origin):Length() / 80 + 0.001 --Divide by 0 is death
 
 			if PlayerDist < self.Radius * 4 and not LocPly:HasGodMode() then
