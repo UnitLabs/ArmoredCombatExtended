@@ -269,7 +269,9 @@ do
 
 	-- Tries to convert a scale id, having a string format, to a vector scale. If its already a vector, skip the process.
 	local function ConvertStringScale( ScaleId )
-		if isvector( ScaleId ) then return ScaleId end
+		if isvector( ScaleId ) then
+			return ClampScale(ScaleId)
+		end
 		if not IsValidStringScale( ScaleId ) then return end
 
 		local Scale = ParseToVector( ScaleId )
@@ -282,6 +284,7 @@ do
 	local function CreateLegacyScale( Id, Ammo )
 		local Content = LegacyAmmoTable[Id]
 		Scale = Vector( Content.Length, Content.Width, Content.Height )
+		Scale = ClampScale(Scale)
 		Ammo:SetPos( Ammo:LocalToWorld( vector_up * Content.Offset ) ) -- necessary to do, since some old crates had not a coordinated origin at its center but the base of them.
 
 		return Scale
