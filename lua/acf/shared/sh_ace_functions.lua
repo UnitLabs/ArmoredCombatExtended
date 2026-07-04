@@ -445,9 +445,9 @@ do
 	end
 end
 
-timer.Simple(1, function()
-	ACF_UpdateChecking()
-end )
+-- timer.Simple(1, function()
+-- 	ACF_UpdateChecking()
+-- end )
 
 
 do
