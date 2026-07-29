@@ -189,7 +189,9 @@ do
 
 	-- Tries to convert a scale id, having a string format, to a vector scale. If its already a vector, skip the process.
 	local function ConvertStringScale( ScaleId )
-		if isvector( ScaleId ) then return ScaleId end
+		if isvector( ScaleId ) then
+			return ClampScale(ScaleId)
+		end
 		if not IsValidStringScale( ScaleId ) then return end
 
 		local Scale = ParseToVector( ScaleId )
